@@ -11,12 +11,19 @@ namespace FinancesOrganizer.Controllers
     [ApiController]
     [Route("[controller]")]
 
-    public class FinController : ControllerBase
+    public class FinancesController : ControllerBase
     {
         [HttpGet]
         public IActionResult GetTest()
         {
             return Ok("API respondendo!");
+        }
+
+        [HttpPost]
+        public IActionResult PostTest([FromBody] RegisterUserDTO body)
+        {
+            var testeReceiver = body;
+            return Ok(body);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FinancesOrganizer.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace FinancesOrganizer.Data
 
         }
 
-        //public DbSet<>
+        public DbSet<User> Wallets { get; set; }
     }
 }

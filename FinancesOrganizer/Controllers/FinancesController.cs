@@ -20,7 +20,7 @@ namespace FinancesOrganizer.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostTest([FromBody] RegisterUserDTO body)
+        public IActionResult PostTest([FromBody] User body)
         {
             var testeReceiver = body;
             return Ok(body);

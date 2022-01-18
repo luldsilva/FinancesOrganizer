@@ -1,5 +1,7 @@
-﻿using FinancesOrganizer.Models;
+﻿using FinancesOrganizer.Data;
+using FinancesOrganizer.Models;
 using FinancesOrganizer.Models.DTOS;
+using FinancesOrganizer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,17 +15,22 @@ namespace FinancesOrganizer.Controllers
 
     public class FinancesController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetTest()
+        private RecipeRepository _repo;
+        private DataContext _context;
+
+        public FinancesController(DataContext context)
         {
-            return Ok("API respondendo!");
+            //_repo = repo;
+            _context = context;
         }
 
         [HttpPost]
-        public IActionResult PostTest([FromBody] User body)
+        public IActionResult Recipe([FromBody] Recipe recipe)
         {
-            var testeReceiver = body;
-            return Ok(body);
+            //_repo.RegisterRecipe(recipe);
+            _context.Recipe.Add(recipe);
+            _context.SaveChanges();
+            return Ok();
         }
     }
 }

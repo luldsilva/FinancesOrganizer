@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace FinancesOrganizer.Data
 {
-    public class WalletContext : DbContext
+    public class DataContext : DbContext
     {
-        public WalletContext(DbContextOptions<WalletContext> opt) : base (opt)
+        public DataContext(DbContextOptions<DataContext> opt) : base (opt)
         {
 
         }
 
-        public DbSet<User> Wallets { get; set; }
+        public DbSet<Recipe> Recipe { get; set; }
+        public DbSet<Expense> Expense { get; set; }
     }
 }

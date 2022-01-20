@@ -14,13 +14,13 @@ namespace FinancesOrganizer.Controllers
     [ApiController]
     [Route("[controller]")]
 
-    public class FinancesController : ControllerBase
+    public class RecipeController : ControllerBase
     {
         private RecipeRepository _repo;
         private DataContext _context;
         private IMapper _mapper;
 
-        public FinancesController(DataContext context, IMapper mapper)
+        public RecipeController(DataContext context, IMapper mapper)
         {
             //_repo = repo;
             _context = context;

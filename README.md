@@ -14,4 +14,4 @@ Thats a project from web API, where works like a controller for input and output
 <h2>Author</h2>
 
 | [<img src="https://avatars.githubusercontent.com/LucasMihayaz" width=115><br><sub>Lucas Silva</sub>](https://github.com/LucasMihayaz) |  
-| :---: | :---: | :---: |
+| :---: | 

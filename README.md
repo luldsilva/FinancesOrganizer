@@ -5,11 +5,19 @@ Thats a project from web API, where works like a controller for input and output
 
 <h2>See open project in action</h2>
 
+:construction: Coming soon :construction:
+
 <h2>Building and running</h2>
+
+:construction: Coming soon :construction:
 
 <h2>Documentation</h2>
 
+:construction: Coming soon :construction:
+
 <h2>Tests</h2>
+
+:construction: Coming soon :construction:
 
 <h2>Author</h2>
 

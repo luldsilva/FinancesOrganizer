@@ -1,5 +1,6 @@
 ﻿using FinancesOrganizer.Data;
 using FinancesOrganizer.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinancesOrganizer.Repositories
 {
-    public class RecipeRepository
+    public class RecipeRepository : IUtil
     {
         private DataContext _context;
 
@@ -16,10 +17,21 @@ namespace FinancesOrganizer.Repositories
             _context = context;
         }
 
-        public void RegisterRecipe(Recipe recipe)
+
+        public string RegisterRecipe(Recipe recipe)
         {
-            _context.Recipe.Add(recipe);
-            _context.SaveChanges();
+            try
+            {
+                string result;
+                _context.Recipe.Add(recipe);
+                _context.SaveChanges();
+                result = "Sucesso";
+                return result;
+            }
+            catch(NullReferenceException ex)
+            {
+                throw;
+            }
         }
     }
 }

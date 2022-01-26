@@ -26,15 +26,57 @@ namespace FinancesOrganizer.Controllers
         public IActionResult Expense([FromBody] CreateExpenseDTO expenseDTO)
         {
             Expense expense = _mapper.Map<Expense>(expenseDTO);
+
+            if (_context.Expense.Any(x => x.Description == expenseDTO.Description))
+            {
+                return BadRequest("Descrição duplicada!");
+            }
+
+            if (expenseDTO.Category == 0)
+            {
+                expense.Category = Enum.CategoryExpenseEnum.Others;
+            }
+
             _context.Expense.Add(expense);
             _context.SaveChanges();
             return Ok();
         }
 
         [HttpGet]
-        public IActionResult ListExpense()
+        public IActionResult ListExpense([FromQuery] string descriptionExpense)
         {
-            return Ok(_context.Expense);
+            List<Expense> expenseList = _context.Expense.ToList();
+            if(expenseList is null)
+            {
+                return NotFound();
+            }
+            if (!string.IsNullOrEmpty(descriptionExpense))
+            {
+                IEnumerable<Expense> query = from expense in expenseList
+                                            where expense.Description == descriptionExpense
+                                            select expense;
+                expenseList = query.ToList();
+            }
+            return Ok(expenseList);
+        }
+
+        [HttpGet("{ano}/{mes}")]
+        public IActionResult ListExpensePerMonth(long ano, int mes)
+        {
+            List<Expense> expenseList = _context.Expense.ToList();
+            if (expenseList is null)
+            {
+                return NotFound();
+            }
+
+            IEnumerable<Expense> query = from expense in expenseList
+                                        where expense.Date.Year == ano &&
+                                        expense.Date.Month == mes
+                                        select expense;
+            expenseList = query.ToList();
+
+
+            return Ok(expenseList);
         }
 
         [HttpGet("{id}")]

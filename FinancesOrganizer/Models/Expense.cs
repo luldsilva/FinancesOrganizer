@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinancesOrganizer.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,5 +21,7 @@ namespace FinancesOrganizer
 
         [Required(ErrorMessage = "O campo data é obrigatório")]
         public DateTime Date { get; set; }
+
+        public CategoryExpenseEnum Category { get; set; }
     }
 }

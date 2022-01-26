@@ -32,15 +32,52 @@ namespace FinancesOrganizer.Controllers
         {
             Recipe recipe = _mapper.Map<Recipe>(recipeDTO);
             //_repo.RegisterRecipe(recipe);
+
+            if(_context.Recipe.Any(x => x.Description == recipeDTO.Description))
+            {
+                return BadRequest("Descrição duplicada!");
+            }
+
             _context.Recipe.Add(recipe);
             _context.SaveChanges();
             return Ok();
         }
 
         [HttpGet]
-        public IActionResult ListRecipe()
+        public IActionResult ListRecipe([FromQuery] string descriptionRecipe)
         {
-            return Ok(_context.Recipe);
+            List<Recipe> recipeList = _context.Recipe.ToList();
+            if(recipeList is null)
+            {
+                return NotFound();
+            }
+            if (!string.IsNullOrEmpty(descriptionRecipe))
+            {
+                IEnumerable<Recipe> query = from recipe in recipeList
+                                            where recipe.Description == descriptionRecipe
+                                            select recipe;
+                recipeList = query.ToList();
+            }
+            return Ok(recipeList);
+        }
+
+        [HttpGet("{ano}/{mes}")]
+        public IActionResult ListRecipePerMonth(long ano, int mes)
+        {
+            List<Recipe> recipeList = _context.Recipe.ToList();
+            if (recipeList is null)
+            {
+                return NotFound();
+            }
+
+            IEnumerable<Recipe> query = from recipe in recipeList
+                                        where recipe.Date.Year == ano &&
+                                        recipe.Date.Month == mes
+                                        select recipe;
+            recipeList = query.ToList();
+                                         
+
+            return Ok(recipeList);
         }
 
         [HttpGet("{id}")]

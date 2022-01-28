@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinancesOrganizer.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,5 +20,7 @@ namespace FinancesOrganizer.Models.DTOS
         {
             get; set;
         }
+
+        public CategoryExpenseEnum Category { get; set; }
     }
 }

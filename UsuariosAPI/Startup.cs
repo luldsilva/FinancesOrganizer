@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UsersAPI.Services;
 using UsuariosAPI.Data;
 using UsuariosAPI.Services;
 
@@ -32,7 +33,10 @@ namespace UsuariosAPI
         {
             services.AddDbContext<UserDbContext>(opts => opts.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<IdentityUser<int>, IdentityRole<int>>().AddEntityFrameworkStores<UserDbContext>();
+            services.AddScoped<LogoutService, LogoutService>();
             services.AddScoped<RegisterService, RegisterService>();
+            services.AddScoped<TokenService, TokenService>();
+            services.AddScoped<LoginService, LoginService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

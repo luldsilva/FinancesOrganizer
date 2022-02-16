@@ -1,5 +1,8 @@
-﻿using FinancesOrganizer.Data;
+﻿using AutoMapper;
+using FinancesOrganizer.Data;
+using FinancesOrganizer.Interfaces;
 using FinancesOrganizer.Models;
+using FinancesOrganizer.Models.DTOS;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,29 +11,42 @@ using System.Threading.Tasks;
 
 namespace FinancesOrganizer.Repositories
 {
-    public class RecipeRepository : IUtil
+    public class RecipeRepository : ControllerBase, IUtil
     {
+        private IMapper _mapper;
         private DataContext _context;
 
-        public RecipeRepository(DataContext context)
+        public RecipeRepository(DataContext context,IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+        }
+        public IActionResult RegisterRecipe(CreateRecipeDTO recipeDTO)
+        {
+            Recipe recipe = _mapper.Map<Recipe>(recipeDTO);
+            IsDuplicateVerify(recipeDTO.Description);
+
+            var res = _context.AddItemInDb(recipe);
+
+            //Pesquisar se bad request é o melhor cod de erro ou se tem um melhor
+            if (res.IsFailed) return BadRequest(res.Errors);
+            return Ok(res.Successes);
+
         }
 
-
-        public string RegisterRecipe(Recipe recipe)
+        //Verificar se isso aqui funciona
+        public void IsDuplicateVerify(string description)
         {
-            try
+            bool returnMessage = false;
+
+            if (_context.Recipe.Any(x => x.Description == description))
             {
-                string result;
-                _context.Recipe.Add(recipe);
-                _context.SaveChanges();
-                result = "Sucesso";
-                return result;
+                returnMessage = true;
             }
-            catch(NullReferenceException ex)
+
+            if (returnMessage == true)
             {
-                throw;
+                BadRequest("Mensagem duplicada!");
             }
         }
     }

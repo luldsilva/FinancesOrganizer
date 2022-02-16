@@ -32,7 +32,11 @@ namespace UsuariosAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<UserDbContext>(opts => opts.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>().AddEntityFrameworkStores<UserDbContext>();
+            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
+                opt => opt.SignIn.RequireConfirmedEmail = true
+                )
+                .AddEntityFrameworkStores<UserDbContext>()
+                .AddDefaultTokenProviders();
             services.AddScoped<LogoutService, LogoutService>();
             services.AddScoped<RegisterService, RegisterService>();
             services.AddScoped<TokenService, TokenService>();

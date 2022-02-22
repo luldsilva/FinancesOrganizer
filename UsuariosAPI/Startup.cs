@@ -41,6 +41,7 @@ namespace UsuariosAPI
             services.AddScoped<RegisterService, RegisterService>();
             services.AddScoped<TokenService, TokenService>();
             services.AddScoped<LoginService, LoginService>();
+            services.AddScoped<EmailService, EmailService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

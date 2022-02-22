@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System;
 using UsersAPI.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace UsuariosAPI.Services
 {
@@ -15,12 +18,12 @@ namespace UsuariosAPI.Services
             _configuration = configuration;
         }
 
-        //public void SendEmail(string[] recipient, string topic, int userId, string code)
-        //{
-        //    Message message = new Message(recipient, topic, userId, code);
-        //    var messageEmail = (MimeMessage)CreateEmailBody(message);
-        //    readToSendEmail(messageEmail);
-        //}
+        public void SendEmail(string[] recipient, string topic, int userId, string code)
+        {
+            Message message = new Message(recipient, topic, userId, code);
+            var messageEmail = (MimeMessage)CreateEmailBody(message);
+            readToSendEmail(messageEmail);
+        }
 
         private void readToSendEmail(MimeMessage messageEmail)
         {
@@ -41,21 +44,25 @@ namespace UsuariosAPI.Services
                 }
                 finally
                 {
+                    client.Disconnect(true);
                     client.Dispose();
                 }
             }
         }
 
-        //private object CreateEmailBody(Message message)
-        //{
-        //    var messageEmail = new MimeMessage();
-        //    messageEmail.From.Add(new MailboxAddress(_configuration.GetValue<string>("EmailSettings:From")));
-        //    messageEmail.To.AddRange(message.Recipient);
-        //    messageEmail.Subject = message.Topic;
-        //    messageEmail.Body = new TextPart(MimeKit.Text.TextFormat.Text)
-        //    {
-        //        Text = message.Content
-        //    };
-        //}
+        private MimeMessage CreateEmailBody(Message message)
+        {
+            var messageEmail = new MimeMessage();
+            messageEmail.From.Add(new MailboxAddress("Lucas teste",
+                _configuration.GetValue<string>("EmailSettings:From")));
+            messageEmail.To.AddRange(message.Recipient);
+            messageEmail.Subject = message.Topic;
+            messageEmail.Body = new TextPart(MimeKit.Text.TextFormat.Text)
+            {
+                Text = message.Content
+            };
+
+            return messageEmail;
+        }
     }
 }

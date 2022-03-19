@@ -17,12 +17,14 @@ namespace UsuariosAPI.Services
         private IMapper _mapper;
         private UserManager<IdentityUser<int>> _userManager;
         private EmailService _emailService;
+        private RoleManager<IdentityRole<int>> _roleManager;
 
-        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService)
+        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService, RoleManager<IdentityRole<int>> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;
             _emailService = emailService;
+            _roleManager = roleManager;
         }
 
 
@@ -30,9 +32,9 @@ namespace UsuariosAPI.Services
         {
             User user = _mapper.Map<User>(createDTO);
             IdentityUser<int> userIdentity = _mapper.Map<IdentityUser<int>>(user);
-
-            Task<IdentityResult> resultIdentity = _userManager.CreateAsync(userIdentity, createDTO.Password);
-            if (resultIdentity.Result.Succeeded)
+            var resultIdentity = _userManager.CreateAsync(userIdentity, createDTO.Password).Result;
+            _userManager.AddToRoleAsync(userIdentity, "regular");
+            if (resultIdentity.Succeeded)
             {
                 var code = _userManager.GenerateEmailConfirmationTokenAsync(userIdentity).Result;
                 var encodedCode = HttpUtility.UrlEncode(code);

@@ -33,7 +33,9 @@ namespace UsuariosAPI.Services
                 {
                     client.Connect(_configuration.GetValue<string>("EmailSettings:SmtpServer"), 
                         _configuration.GetValue<int>("EmailSettings:Port"), true);
+                    var teste1 = _configuration.GetValue<int>("EmailSettings:Port");
                     client.AuthenticationMechanisms.Remove("XOUATH2");
+                    var teste2 = _configuration.GetValue<string>("EmailSettings:From");
                     client.Authenticate(_configuration.GetValue<string>("EmailSettings:From"),
                         _configuration.GetValue<string>("EmailSettings:Password"));
                     client.Send(messageEmail);

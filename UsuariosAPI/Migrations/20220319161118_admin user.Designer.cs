@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UsuariosAPI.Data;
@@ -9,9 +10,10 @@ using UsuariosAPI.Data;
 namespace UsuariosAPI.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220319161118_admin user")]
+    partial class adminuser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,16 +52,9 @@ namespace UsuariosAPI.Migrations
                         new
                         {
                             Id = 99999,
-                            ConcurrencyStamp = "9d091c39-4089-4d1a-9237-a8ac74946f6c",
+                            ConcurrencyStamp = "188f240a-7a35-4e13-8f4b-4739e3078ce3",
                             Name = "admin",
                             NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = 99997,
-                            ConcurrencyStamp = "c63344ce-b46b-4d60-8866-d915da3a1eff",
-                            Name = "regular",
-                            NormalizedName = "REGULAR"
                         });
                 });
 
@@ -156,15 +151,15 @@ namespace UsuariosAPI.Migrations
                         {
                             Id = 99999,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9e625e8e-659a-4c4f-bd7c-093126a10007",
+                            ConcurrencyStamp = "e92154ff-6c09-47b3-a293-0db174050122",
                             Email = "adminfincobserver@gmail.comn",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMINFINCOBSERVER@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGzw9NEayem+msNGpNUfLw/hUCH3fTRNEDfe+m1GZdaumAwFDIboqli0QsJNgXyBjg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPd7lK19UOByWPezmE6R5dSgpqTyjIsjN/bQ4QvuM1UQ3/bpqjtGxhDzlqYb3u/Y6w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ed83b1e3-f561-476c-bdde-f261fb38518c",
+                            SecurityStamp = "3add6eae-b279-4d8b-a6c2-3a3d4ab6b7f7",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

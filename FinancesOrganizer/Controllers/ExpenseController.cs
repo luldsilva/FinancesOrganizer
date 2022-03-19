@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using FinancesOrganizer.Data;
 using FinancesOrganizer.Models.DTOS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FinancesOrganizer.Controllers
 {
@@ -23,6 +23,7 @@ namespace FinancesOrganizer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public IActionResult Expense([FromBody] CreateExpenseDTO expenseDTO)
         {
             Expense expense = _mapper.Map<Expense>(expenseDTO);
@@ -43,6 +44,7 @@ namespace FinancesOrganizer.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin, regular")]
         public IActionResult ListExpense([FromQuery] string descriptionExpense)
         {
             List<Expense> expenseList = _context.Expense.ToList();

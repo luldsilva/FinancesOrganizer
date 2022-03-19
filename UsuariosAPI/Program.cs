@@ -22,6 +22,7 @@ namespace UsuariosAPI
                 {
                     webBuilder.UseStartup<Startup>()
                     .UseIISIntegration();
-                });
+                })
+            .ConfigureAppConfiguration((context, builder) => builder.AddUserSecrets<Program>());
     }
 }
